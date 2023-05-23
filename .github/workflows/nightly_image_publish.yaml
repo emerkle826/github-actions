@@ -30,7 +30,7 @@ jobs:
         run: |
           pwd
           ls -l
-          echo "COMMITSHA=$(git rev-parse --short ${{ inputs.sha }})\n" >> $GITHUB_OUTPUT
+          echo "COMMITSHA=$(git rev-parse --short ${{ inputs.sha }})\n" >> $GITHUB_ENV
       - name: Setup Docker scheduled meta
         if: ${{ github.event_name == 'schedule' }}
         id: meta_schedule
