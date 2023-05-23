@@ -30,7 +30,7 @@ jobs:
         run: |
           echo "COMMITSHA=$(git rev-parse --short ${{ inputs.sha }})\n" >> $GITHUB_OUTPUT
       - name: Setup Docker scheduled meta
-        if: ${{ github.event.name == 'schedule' }}
+        if: ${{ github.event_name == 'schedule' }}
         id: meta_schedule
         uses: docker/metadata-action@v4
         with:
@@ -42,7 +42,7 @@ jobs:
             type=schedule,pattern={{date 'YYYYMMDD'}}
             type=raw,value=${{ env.COMMITSHA }}
       - name: Setup Docker on demand meta
-        if: ${{ github.event.name == 'workflow_dispatch' }}
+        if: ${{ github.event_name == 'workflow_dispatch' }}
         id: meta_on_demand
         uses: docker/metadata-action@v4
         with:
@@ -65,7 +65,7 @@ jobs:
 #          username: ${{ secrets.DOCKER_HUB_USERNAME }}
 #          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
       - name: Publish ${{ matrix.cassandra-version }} to Registry for scheduled event
-        if: ${{ github.event.name == 'schedule' }}
+        if: ${{ github.event_name == 'schedule' }}
         id: docker_build_schedule
         run: |
           echo "Determined event to be scheduled. ENV is: ${{ env.COMMITSHA }}"
@@ -78,7 +78,7 @@ jobs:
 #          platforms: linux/amd64,linux/arm64
 #          target: cass-trunk
       - name: Publish ${{ matrix.cassandra-version }} to Registry for on-demand event
-        if: ${{ github.event.name == 'workflow_dispatch' }}
+        if: ${{ github.event_name == 'workflow_dispatch' }}
         id: docker_build_on_demand
         run: |
           echo "determined event to be workflow_dispatch.  ENV is: ${{ env.COMMITSHA }}"
