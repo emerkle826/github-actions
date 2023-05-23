@@ -28,6 +28,8 @@ jobs:
       - name: Get Cassandra COMMIT SHA
         id: get_sha
         run: |
+          pwd
+          ls -l
           echo "COMMITSHA=$(git rev-parse --short ${{ inputs.sha }})\n" >> $GITHUB_OUTPUT
       - name: Setup Docker scheduled meta
         if: ${{ github.event_name == 'schedule' }}
