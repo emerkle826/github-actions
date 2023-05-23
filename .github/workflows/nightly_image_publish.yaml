@@ -20,11 +20,13 @@ jobs:
         cassandra-version: ['5.0']
     runs-on: ubuntu-latest
     steps:
-      - name: Determine Cassnadra commit SHA
-        id: commit_sha
+      - name: Checkout Cassandra
+        id: checkout_cassandra
         uses: actions/checkout@v3
         with:
           repository: 'apache/cassandra'
+      - name: Get Cassandra COMMIT SHA
+        id: get_sha
         run: |
           echo "COMMITSHA=$(git rev-parse --short ${{ inputs.sha }})\n" >> $GITHUB_OUTPUT
       - name: Setup Docker scheduled meta
